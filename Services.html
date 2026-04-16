@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Chat Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* أنيميشن دخول الصفحة */
+        body {
+            animation: fadeInPage 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        /* ===== Navbar Styles ===== */
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background: transparent;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #0FB0AC;
+            text-shadow: 0 0 10px #0FB0AC;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+
+        .nav-links a:hover {
+            color: #0FB0AC;
+        }
+
+        /* ===== Chat Container ===== */
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(15, 176, 172, 0.3);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(15, 176, 172, 0.5);
+            margin-top: 80px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0FB0AC, #0a8a87);
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            color: white;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bot-message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .bot-avatar {
+            width: 35px;
+            height: 35px;
+            background: #0FB0AC;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .bot-text {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 18px;
+            border-radius: 20px;
+            border-top-left-radius: 5px;
+            color: white;
+            max-width: 80%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .user-text {
+            background: #0FB0AC;
+            padding: 12px 18px;
+            border-radius: 20px;
+            border-top-right-radius: 5px;
+            color: white;
+            max-width: 80%;
+            font-size: 0.95rem;
+        }
+
+        .options-area {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .options-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .options-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .option-btn {
+            background: rgba(15, 176, 172, 0.2);
+            border: 1px solid #0FB0AC;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .option-btn:hover {
+            background: #0FB0AC;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #0FB0AC;
+            border-radius: 10px;
+        }
+
+        .typing {
+            display: flex;
+            gap: 5px;
+            padding: 12px 18px;
+        }
+
+        .typing span {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                max-width: 95%;
+                margin-top: 70px;
+            }
+            .chat-messages {
+                height: 350px;
+            }
+            .option-btn {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                Daniel <span>CV</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Chat Bot</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>
+                <i class="fas fa-robot"></i>Chat Bot
+            </h2>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="bot-message">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot" style="font-size: 0.9rem;"></i>
+                </div>
+                <div class="bot-text">
+                    👋 مرحباً! أنا مساعدك الذكي.<br>
+                    اختر من الأزرار بالأسفل لأي خدمة تريدها.
+                </div>
+            </div>
+        </div>
+
+        <div class="options-area">
+            <div class="options-title">📌 اختر استفسارك:</div>
+            <div class="options-buttons" id="optionsButtons">
+                <button class="option-btn" data-question="time">⏱️ مدة التسليم</button>
+                <button class="option-btn" data-question="services">🎨 الخدمات المتاحة</button>
+                <button class="option-btn" data-question="payment">💳 طرق الدفع</button>
+                <button class="option-btn" data-question="contact">📞 التواصل معي</button>
+                <button class="option-btn" data-question="portfolio">🖼️ أعمالي السابقة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        
+        const botResponses = {
+            
+            time: "⏱️ مدة التسليم:\n\n• اي حاجه: 1-3 يوم\nالخدمات السريعة متاحة بطلب خاص 🚀",
+            
+            services: "🎨 الخدمات المتاحة:\n\n✅ تصميم جرافيك\n✅ مطور العاب\n✅ برمجة اردوينو\n✅ تعديل الصور\n✅ تصميم شعارات\n✅ برمجه\n✅ مونتاج فيديو\n✅ برمجة زكاء اصطناعي\n✅ برمجة ويب سيت\n\nتواصل معي لطلب أي خدمة!",
+            
+            payment: "💳 طرق الدفع:\n\n• انستا باي(Inst abay)\n• تحويل بنكي\n• فودافون كاش (مصر)\n\nالدفع 50% مقدم، والباقي بعد الاستلام ✅",
+            
+            contact: "📞 للتواصل معي:\n\n• واتساب: <a href='https://wa.me/201224743204' style='color:#0FB0AC;' target='_blank'>اضغط هنا</a>\n• فيسبوك: Daniel Hany\n• إيميل: dhany0515@gmail.\n\nأنا في انتظارك! 💬",
+            
+            portfolio: "🖼️ أعمالي السابقة:\n\nيمكنك مشاهدة أعمالي على:\n\n• إنستجرام: <a href='https://instagram.com/danielhany61' style='color:#0FB0AC;' target='_blank'>@danielhany61</a>\n• فيسبوك: <a href='https://facebook.com/daniel.hany.603841' style='color:#0FB0AC;' target='_blank'>Daniel Hany</a>\n\nتواصل معي لطلب أعمال جديدة! ✨"
+        };
+
+        function addUserMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'user-message';
+            messageDiv.innerHTML = `<div class="user-text">${text}</div>`;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addBotMessage(text, isHtml = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'bot-message';
+            if (isHtml) {
+                messageDiv.innerHTML = `
+                    <div class="bot-avatar">
+                        <i class="fas fa-robot" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <div class="bot-text">${text}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="bot-avatar">
+                        <i class="fas fa-robot" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <div class="bot-text">${text.replace(/\n/g, '<br>')}</div>
+                `;
+            }
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function showTyping(callback) {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'bot-message';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="bot-avatar">
+                    <i class="fas fa-robot" style="font-size: 0.9rem;"></i>
+                </div>
+                <div class="bot-text typing">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            scrollToBottom();
+            
+            setTimeout(() => {
+                const indicator = document.getElementById('typingIndicator');
+                if (indicator) indicator.remove();
+                callback();
+            }, 800);
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleQuestion(questionKey, questionText) {
+            addUserMessage(questionText);
+            
+            showTyping(() => {
+                const response = botResponses[questionKey];
+                if (response) {
+                    const isHtml = (questionKey === 'contact' || questionKey === 'portfolio');
+                    addBotMessage(response, isHtml);
+                } else {
+                    addBotMessage("❌ عذراً، لم أفهم سؤالك.");
+                }
+            });
+        }
+
+        const buttons = document.querySelectorAll('.option-btn');
+        const buttonQuestions = {
+            'price': '💰 ما هي أسعار الخدمات؟',
+            'time': '⏱️ كم تستغرق مدة التسليم؟',
+            'services': '🎨 ما هي الخدمات المتاحة؟',
+            'payment': '💳 ما هي طرق الدفع؟',
+            'contact': '📞 كيف يمكنني التواصل معك؟',
+            'portfolio': '🖼️ أين يمكنني رؤية أعمالك السابقة؟'
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const questionKey = button.getAttribute('data-question');
+                const questionText = buttonQuestions[questionKey];
+                if (questionKey && questionText) {
+                    handleQuestion(questionKey, questionText);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

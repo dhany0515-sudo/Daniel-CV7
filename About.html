@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Daniel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* أنيميشن دخول الصفحة */
+        body {
+            animation: fadeInPage 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 0;
+        }
+
+        /* ===== Navbar Styles ===== */
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background: transparent;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #0FB0AC;
+            text-shadow: 0 0 10px #0FB0AC;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+
+        .nav-links a:hover {
+            color: #0FB0AC;
+        }
+
+        /* ===== About Content ===== */
+        .about-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0;
+            padding: 100px 50px 50px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-content {
+            text-align: left;
+        }
+
+        .hi-text {
+            font-size: 3.5rem;
+            color: #FFFFFF;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .about-name {
+            color: #0FB0AC;
+            font-weight: 700;
+            text-decoration: underline;
+            font-size: 3.8rem;
+        }
+
+        .about-description {
+            font-size: 1.3rem;
+            color: #FFFFFF;
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+
+        .about-details {
+            margin-top: 30px;
+        }
+
+        .detail-item {
+            margin-bottom: 18px;
+            font-size: 1.2rem;
+            color: #FFFFFF;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #0FB0AC;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .detail-value {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                padding: 80px 20px 20px 20px;
+            }
+            .hi-text {
+                font-size: 2rem;
+            }
+            .about-name {
+                font-size: 2.2rem;
+            }
+            .about-description {
+                font-size: 1rem;
+            }
+            .detail-item, .detail-label, .detail-value {
+                font-size: 0.9rem;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                Daniel <span>CV</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Chat Bot</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-content">
+            <p class="hi-text">👋 HI I'm <span class="about-name">Daniel Hany</span></p>
+            <p class="about-description">
+                I'm a programmer, game developer, and designer with experience creating stunning visual content.
+                I love turning ideas into beautiful designs that tell a story.
+            </p>
+            <div class="about-details">
+                <div class="detail-item">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">Daniel Hany</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">From:</span>
+                    <span class="detail-value">Egypt</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">dhany0515@gmail.com</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Experience:</span>
+                    <span class="detail-value">4+ Years</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Age:</span>
+                    <span class="detail-value">15 Years old</span>
+            </div>
+            <div class="detail-item">
+                    <span class="detail-label">phone number:</span>
+                    <span class="detail-value">+20 1224743204</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
